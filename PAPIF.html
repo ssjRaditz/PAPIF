@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant & Pest Identification Flashcards</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --moss: #3d5a3e;
+    --sage: #7a9e7e;
+    --parchment: #f5f0e8;
+    --bark: #2c1f14;
+    --clay: #c4773a;
+    --mist: #dce8dc;
+    --white: #ffffff;
+    --dark-matte: #1c221c;
+    --rust: #8b3a2a;
+    --rust-light: #c4503a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--parchment);
+    color: var(--bark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── MENU SCREEN ── */
+  #menuScreen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 48px;
+  }
+
+  .menu-title {
+    text-align: center;
+  }
+  .menu-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--moss);
+    line-height: 1.2;
+  }
+  .menu-title h1 em { font-style: italic; color: var(--clay); }
+  .menu-title p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #777;
+    font-weight: 300;
+  }
+
+  .menu-categories {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .category-card {
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: 0 6px 28px rgba(44,31,20,0.12);
+    padding: 36px 44px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+    min-width: 200px;
+  }
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(44,31,20,0.18);
+  }
+  .category-card.plants { border-color: var(--sage); }
+  .category-card.pests  { border-color: var(--rust-light); }
+
+  .category-icon { font-size: 3rem; margin-bottom: 12px; }
+  .category-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .category-card.plants h2 { color: var(--moss); }
+  .category-card.pests h2  { color: var(--rust); }
+  .category-card p { font-size: 0.85rem; color: #888; font-weight: 300; }
+
+  .menu-mode-label {
+    font-size: 0.8rem;
+    color: #aaa;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .menu-modes {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mode-pill {
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 2px solid var(--mist);
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    color: var(--bark);
+    font-weight: 500;
+  }
+  .mode-pill.selected {
+    background: var(--moss);
+    color: var(--white);
+    border-color: var(--moss);
+  }
+  .mode-pill.pests-selected {
+    background: var(--rust);
+    color: var(--white);
+    border-color: var(--rust);
+  }
+
+  /* ── APP SCREEN ── */
+  #appScreen { display: none; flex-direction: column; flex: 1; }
+
+  header {
+    background: var(--moss);
+    color: var(--parchment);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header.pests-header { background: var(--rust); }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  header h1 em { font-style: italic; color: var(--mist); }
+
+  .header-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+  .back-btn {
+    background: rgba(255,255,255,0.15);
+    color: var(--parchment);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.25); }
+
+  .progress-info { font-size: 0.82rem; color: var(--mist); font-weight: 300; }
+
+  .controls {
+    background: var(--white);
+    border-bottom: 1px solid var(--mist);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 160px;
+    padding: 7px 13px;
+    border: 1.5px solid var(--mist);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    background: var(--parchment);
+    color: var(--bark);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--sage); }
+
+  .btn {
+    padding: 7px 16px;
+    border: none;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .btn-primary  { background: var(--moss);  color: var(--parchment); }
+  .btn-secondary{ background: var(--mist);  color: var(--moss); }
+  .btn-clay     { background: var(--clay);  color: var(--white); }
+  .btn-rust     { background: var(--rust);  color: var(--white); }
+  .btn-quiz     { background: #4a6fa5;      color: var(--white); }
+
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .card-counter { font-size: 0.83rem; color: #888; white-space: nowrap; }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 28px 20px;
+  }
+
+  /* ── FLASHCARD ── */
+  #cardMode { width: 100%; max-width: 680px; display: block; }
+
+  .flashcard-wrapper {
+    perspective: 1200px;
+    width: 100%;
+    height: 440px;
+    cursor: pointer;
+    margin-bottom: 22px;
+  }
+
+  .flashcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(44,31,20,0.12);
+  }
+
+  .face-front {
+    background: var(--dark-matte);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Two-image layout */
+  .card-images-row {
+    flex: 1;
+    display: flex;
+    gap: 2px;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .card-image-slot {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-matte);
+  }
+
+  .card-image-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .img-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.55);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 4px;
+  }
+
+  .image-loading, .image-error {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--sage);
+    background: var(--dark-matte);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  .flip-hint {
+    background: var(--moss);
+    color: var(--parchment);
+    text-align: center;
+    padding: 11px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pests-header ~ * .flip-hint,
+  .pests-flip .flip-hint { background: var(--rust); }
+
+  .face-back {
+    transform: rotateY(180deg);
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 36px;
+    text-align: center;
+    border: 2px solid var(--mist);
+  }
+
+  .back-number { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 14px; }
+  .plant-name  { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-style: italic; color: var(--moss); line-height: 1.3; margin-bottom: 14px; }
+  .plant-name.pests-name { color: var(--rust); }
+  .common-name { font-size: 1rem; color: var(--clay); font-weight: 500; }
+  .back-flip-hint { margin-top: 28px; font-size: 0.72rem; color: #bbb; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── QUIZ MODE ── */
+  #quizMode { width: 100%; max-width: 700px; display: none; }
+
+  .quiz-image-row {
+    display: flex;
+    gap: 3px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(44,31,20,0.15);
+    margin-bottom: 22px;
+    background: #111;
+    height: 300px;
+  }
+
+  .quiz-img-slot {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-matte);
+  }
+  .quiz-img-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .quiz-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .choice-btn {
+    padding: 14px 16px;
+    border: 2px solid var(--mist);
+    border-radius: 10px;
+    background: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--bark);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    line-height: 1.35;
+  }
+  .choice-btn:hover:not(:disabled) { border-color: var(--sage); background: var(--mist); }
+  .choice-btn:active:not(:disabled) { transform: scale(0.98); }
+  .choice-btn.correct  { background: #d4f0d4; border-color: #4a9a4a; color: #1a5c1a; }
+  .choice-btn.wrong    { background: #f5d5d0; border-color: #c05040; color: #7a2010; }
+  .choice-btn:disabled { cursor: default; }
+
+  .quiz-feedback {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    min-height: 28px;
+    margin-bottom: 12px;
+    color: var(--moss);
+  }
+
+  .quiz-score {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .quiz-next-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 28px;
+  }
+
+  /* ── GRID ── */
+  #gridMode { display: none; width: 100%; }
+
+  .grid-section { width: 100%; max-width: 1100px; margin: 0 auto; }
+  .grid-section h2 { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 1.05rem; color: var(--moss); margin-bottom: 18px; padding: 0 4px; }
+
+  .plant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .grid-item {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(44,31,20,0.08);
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 2px solid transparent;
+  }
+  .grid-item:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(44,31,20,0.14); }
+  .grid-item.active-card { border-color: var(--clay); }
+
+  .grid-thumb {
+    height: 100px;
+    display: flex;
+    gap: 1px;
+    background: var(--dark-matte);
+    overflow: hidden;
+  }
+  .grid-thumb-slot { flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--dark-matte); }
+  .grid-thumb-slot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .mini-error { font-size: 0.75rem; color: var(--sage); font-weight: 500; }
+
+  .grid-label { padding: 7px 9px; font-size: 0.7rem; font-style: italic; color: var(--moss); line-height: 1.3; font-family: 'Playfair Display', serif; }
+  .grid-id { display: block; font-style: normal; font-family: 'DM Sans', sans-serif; font-size: 0.62rem; color: #aaa; margin-bottom: 2px; }
+
+  .mode-toggle { display: flex; gap: 6px; }
+  .status-bar  { font-size: 0.78rem; color: #999; text-align: center; padding: 8px; }
+
+  @media (max-width: 600px) {
+    header { padding: 14px 16px; }
+    .controls { padding: 10px 14px; }
+    main { padding: 18px 10px; }
+    .flashcard-wrapper { height: 360px; }
+    .plant-name { font-size: 1.45rem; }
+    .quiz-image-row { height: 220px; }
+    .quiz-choices { grid-template-columns: 1fr; }
+    .menu-title h1 { font-size: 1.8rem; }
+    .category-card { padding: 28px 32px; min-width: 160px; }
+  }
+</style>
+
+<!-- Image cache files — plant_image_data.js must exist; pest_image_data.js is optional -->
+<script src="plant_image_data.js" onerror="console.warn('plant_image_data.js not found')"></script>
+<script src="pest_image_data.js" onerror="console.warn('pest_image_data.js not found')"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     MENU SCREEN
+════════════════════════════════════════ -->
+<div id="menuScreen">
+  <div class="menu-title">
+    <h1>🌿 <em>Identification</em> Flashcards</h1>
+    <p>Choose a category and study mode to begin</p>
+  </div>
+
+  <div>
+    <div class="menu-mode-label" style="margin-bottom:14px;">Study mode</div>
+    <div class="menu-modes">
+      <button class="mode-pill selected" id="pillFlash" onclick="selectMode('flash')">🃏 Flashcards</button>
+      <button class="mode-pill" id="pillQuiz"  onclick="selectMode('quiz')">❓ Multiple Choice Quiz</button>
+      <button class="mode-pill" id="pillGrid"  onclick="selectMode('grid')">🔲 Grid Browse</button>
+    </div>
+  </div>
+
+  <div class="menu-categories">
+    <div class="category-card plants" onclick="launchApp('plants')">
+      <div class="category-icon">🌱</div>
+      <h2>Plants</h2>
+      <p>110 botanical specimens</p>
+    </div>
+    <div class="category-card pests" onclick="launchApp('pests')">
+      <div class="category-icon">🐛</div>
+      <h2>Pests &amp; Diseases</h2>
+      <p>25 pests, diseases &amp; disorders</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     APP SCREEN
+════════════════════════════════════════ -->
+<div id="appScreen">
+
+  <header id="appHeader">
+    <h1 id="appTitle">🌿 Plant <em>Identification</em> Flashcards</h1>
+    <div class="header-right">
+      <button class="back-btn" onclick="goMenu()">← Menu</button>
+      <span class="progress-info" id="loadStatus">Ready</span>
+    </div>
+  </header>
+
+  <div class="controls">
+    <input class="search-box" type="text" placeholder="Search…" id="searchInput" oninput="filterItems()">
+    <div class="mode-toggle">
+      <button class="btn btn-primary"   id="btnCard"  onclick="setViewMode('card')">Card</button>
+      <button class="btn btn-secondary" id="btnQuiz"  onclick="setViewMode('quiz')">Quiz</button>
+      <button class="btn btn-secondary" id="btnGrid"  onclick="setViewMode('grid')">Grid</button>
+    </div>
+    <div class="nav-controls" id="navControls">
+      <button class="btn btn-secondary" onclick="prevCard()">← Prev</button>
+      <span class="card-counter" id="cardCounter"></span>
+      <button class="btn btn-secondary" onclick="nextCard()">Next →</button>
+    </div>
+    <div id="shuffleControls" style="display:flex;gap:6px;">
+      <button class="btn btn-clay" onclick="doShuffle()">Shuffle</button>
+      <button class="btn btn-secondary" onclick="resetOrder()">Reset</button>
+    </div>
+  </div>
+
+  <main id="mainArea">
+
+    <!-- CARD MODE -->
+    <div id="cardMode" style="width:100%;max-width:680px;display:block;">
+      <div class="flashcard-wrapper" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+          <div class="face face-front">
+            <div class="card-images-row" id="cardImagesRow">
+              <!-- slots injected by JS -->
+            </div>
+            <div class="flip-hint" id="flipHint">Tap to reveal name</div>
+          </div>
+          <div class="face face-back">
+            <div class="back-number" id="backNumber">#1</div>
+            <div class="plant-name"  id="backName">—</div>
+            <div class="common-name" id="backCommon"></div>
+            <div class="back-flip-hint">Tap to see image</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ MODE -->
+    <div id="quizMode" style="width:100%;max-width:700px;display:none;">
+      <div class="quiz-image-row" id="quizImageRow"></div>
+      <div class="quiz-choices" id="quizChoices"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div class="quiz-score"    id="quizScore"></div>
+      <button class="btn btn-primary quiz-next-btn" id="quizNextBtn" onclick="nextQuiz()" style="display:none;">Next Question →</button>
+    </div>
+
+    <!-- GRID MODE -->
+    <div id="gridMode" style="display:none; width:100%;">
+      <div class="grid-section">
+        <h2 id="gridHeading">All items</h2>
+        <div class="plant-grid" id="plantGrid"></div>
+      </div>
+    </div>
+
+    <div class="status-bar" id="statusBar"></div>
+  </main>
+
+</div><!-- /appScreen -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+
+const PLANTS = [
+  {id:1,name:"X Cuprocyparis leylandii",common:"Leyland Cypress"},
+  {id:2,name:"Abelia × grandiflora",common:"Glossy Abelia"},
+  {id:3,name:"Acanthus mollis",common:"Bear's Breech"},
+  {id:4,name:"Acer griseum",common:"Paperbark Maple"},
+  {id:5,name:"Acer palmatum",common:"Japanese Maple"},
+  {id:6,name:"Achillea millefolium",common:"Common Yarrow"},
+  {id:7,name:"Aegopodium podagraria",common:"Ground Elder"},
+  {id:8,name:"Aesculus hippocastanum",common:"Horse Chestnut"},
+  {id:9,name:"Agave americana",common:"Century Plant"},
+  {id:10,name:"Alchemilla mollis",common:"Lady's Mantle"},
+  {id:11,name:"Araucaria araucana",common:"Monkey Puzzle"},
+  {id:12,name:"Arbutus unedo",common:"Strawberry Tree"},
+  {id:13,name:"Armeria maritima",common:"Thrift"},
+  {id:14,name:"Asplenium scolopendrium",common:"Hart's Tongue Fern"},
+  {id:15,name:"Astrantia major cv.",common:"Greater Masterwort"},
+  {id:16,name:"Bellis perennis",common:"Daisy"},
+  {id:17,name:"Berberis darwinii",common:"Darwin's Barberry"},
+  {id:18,name:"Betula pendula",common:"Silver Birch"},
+  {id:19,name:"Buddleja davidii",common:"Butterfly Bush"},
+  {id:20,name:"Buxus sempervirens",common:"Common Box"},
+  {id:21,name:"Caltha palustris",common:"Marsh Marigold"},
+  {id:22,name:"Calystegia sepium",common:"Hedge Bindweed"},
+  {id:23,name:"Campsis radicans cv.",common:"Trumpet Vine"},
+  {id:24,name:"Canna indica cv.",common:"Indian Shot"},
+  {id:25,name:"Capsella bursa-pastoris",common:"Shepherd's Purse"},
+  {id:26,name:"Centaurea cyanus",common:"Cornflower"},
+  {id:27,name:"Choisya ternata 'Sundance'",common:"Mexican Orange Blossom"},
+  {id:28,name:"Clematis armandi",common:"Armand Clematis"},
+  {id:29,name:"Clivia miniata",common:"Natal Lily"},
+  {id:30,name:"Cordyline australis",common:"Cabbage Palm"},
+  {id:31,name:"Cornus sanguinea cv.",common:"Common Dogwood"},
+  {id:32,name:"Corydalis flexuosa",common:"Blue Corydalis"},
+  {id:33,name:"Corylus avellana",common:"Hazel"},
+  {id:34,name:"Cosmos bipinnatus",common:"Cosmea"},
+  {id:35,name:"Cotinus coggygria",common:"Smoke Tree"},
+  {id:36,name:"Crataegus monogyna",common:"Common Hawthorn"},
+  {id:37,name:"Cyclamen hederifolium",common:"Ivy-leaved Cyclamen"},
+  {id:38,name:"Dahlia 'Bishop of Llandaff'",common:"Dahlia 'Bishop of Llandaff'"},
+  {id:39,name:"Daphne bholua",common:"Nepalese Paper Plant"},
+  {id:40,name:"Daucus carota",common:"Wild Carrot"},
+  {id:41,name:"Echinacea purpurea cv.",common:"Purple Coneflower"},
+  {id:42,name:"Ceratophyllum demersum",common:"Hornwort"},
+  {id:43,name:"Elymus repens",common:"Couch Grass"},
+  {id:44,name:"Eryngium giganteum",common:"Silver Ghost"},
+  {id:45,name:"Euphorbia characias subsp. wulfenii",common:"Mediterranean Spurge"},
+  {id:46,name:"Fagus sylvatica",common:"Common Beech"},
+  {id:47,name:"Fatsia japonica",common:"Japanese Aralia"},
+  {id:48,name:"Forsythia × intermedia",common:"Forsythia"},
+  {id:49,name:"Fritillaria meleagris",common:"Snake's Head Fritillary"},
+  {id:50,name:"Ginkgo biloba",common:"Maidenhair Tree"},
+  {id:51,name:"Griselinia littoralis",common:"New Zealand Broadleaf"},
+  {id:52,name:"Hamamelis mollis cv.",common:"Chinese Witch Hazel"},
+  {id:53,name:"Hedera helix cv.",common:"Common Ivy"},
+  {id:54,name:"Heliotropium arborescens",common:"Common Heliotrope"},
+  {id:55,name:"Helleborus × hybridus cv.",common:"Hybrid Lenten Rose"},
+  {id:56,name:"Ilex aquifolium",common:"Common Holly"},
+  {id:57,name:"Iris pseudacorus",common:"Yellow Iris"},
+  {id:58,name:"Lavandula angustifolia",common:"English Lavender"},
+  {id:59,name:"Leucanthemum vulgare",common:"Ox-eye Daisy"},
+  {id:60,name:"Lewisia cotyledon",common:"Siskiyou Lewisia"},
+  {id:61,name:"Ligustrum ovalifolium",common:"Garden Privet"},
+  {id:62,name:"Liriope muscari",common:"Big Blue Lilyturf"},
+  {id:63,name:"Lobelia cardinalis",common:"Cardinal Flower"},
+  {id:64,name:"Lonicera periclymenum cv.",common:"Common Honeysuckle"},
+  {id:65,name:"Magnolia stellata",common:"Star Magnolia"},
+  {id:66,name:"Matteuccia struthiopteris",common:"Shuttlecock Fern"},
+  {id:67,name:"Metasequoia glyptostroboides",common:"Dawn Redwood"},
+  {id:68,name:"Miscanthus sinensis cv.",common:"Eulalia"},
+  {id:69,name:"Monstera deliciosa",common:"Swiss Cheese Plant"},
+  {id:70,name:"Muscari armeniacum",common:"Armenian Grape Hyacinth"},
+  {id:71,name:"Nigella damascena",common:"Love-in-a-mist"},
+  {id:72,name:"Oenothera biennis",common:"Common Evening Primrose"},
+  {id:73,name:"Ophiopogon planiscapus 'Kokuryū'",common:"Black Mondo"},
+  {id:74,name:"Parthenocissus quinquefolia",common:"Virginia Creeper"},
+  {id:75,name:"Phlomis fruticosa",common:"Jerusalem Sage"},
+  {id:76,name:"Phlox paniculata cv.",common:"Perennial Phlox"},
+  {id:77,name:"Phormium tenax",common:"New Zealand Flax"},
+  {id:78,name:"Photinia × fraseri 'Red Robin'",common:"Christmas Berry 'Red Robin'"},
+  {id:79,name:"Phyllostachys aurea",common:"Fish-pole Bamboo"},
+  {id:80,name:"Plantago major",common:"Greater Plantain"},
+  {id:81,name:"Pontederia cordata",common:"Pickerel Weed"},
+  {id:82,name:"Primula vulgaris",common:"Primrose"},
+  {id:83,name:"Prunella vulgaris",common:"Selfheal"},
+  {id:84,name:"Prunus serrula",common:"Tibetan Cherry"},
+  {id:85,name:"Pulsatilla vulgaris",common:"Pasqueflower"},
+  {id:86,name:"Quercus robur",common:"Common Oak"},
+  {id:87,name:"Ranunculus repens",common:"Creeping Buttercup"},
+  {id:88,name:"Rhinanthus minor",common:"Yellow Rattle"},
+  {id:89,name:"Rudbeckia fulgida var. deamii",common:"Deam's Coneflower"},
+  {id:90,name:"Salvia rosmarinus",common:"Rosemary"},
+  {id:91,name:"Salvia nemorosa cv.",common:"Balkan Clary"},
+  {id:92,name:"Sansevieria trifasciata cv.",common:"Mother-in-law's Tongue"},
+  {id:93,name:"Sarcococca confusa",common:"Sweet Box"},
+  {id:94,name:"Sempervivum arachnoideum",common:"Cobweb Houseleek"},
+  {id:95,name:"Skimmia japonica",common:"Japanese Skimmia"},
+  {id:96,name:"Spathiphyllum wallisii",common:"Peace Lily"},
+  {id:97,name:"Stellaria media",common:"Common Chickweed"},
+  {id:98,name:"Stipa gigantea",common:"Golden Oats"},
+  {id:99,name:"Symphyotrichum novi-belgii cv.",common:"New York Aster"},
+  {id:100,name:"Tagetes erecta",common:"African Marigold"},
+  {id:101,name:"Taraxacum officinale",common:"Dandelion"},
+  {id:102,name:"Taxus baccata",common:"Common Yew"},
+  {id:103,name:"Trachelospermum jasminoides",common:"Star Jasmine"},
+  {id:104,name:"Typha angustifolia",common:"Lesser Bulrush"},
+  {id:105,name:"Urtica dioica",common:"Common Stinging Nettle"},
+  {id:106,name:"Verbena bonariensis",common:"Purple Top"},
+  {id:107,name:"Viburnum davidii",common:"David Viburnum"},
+  {id:108,name:"Vinca major cv.",common:"Greater Periwinkle"},
+  {id:109,name:"Wisteria sinensis",common:"Chinese Wisteria"},
+  {id:110,name:"Zamioculcas zamiifolia",common:"Fern Arum"}
+];
+
+const PESTS = [
+  {id:1, name:"Black Bean Aphid",        common:"Insect Pest"},
+  {id:2, name:"Cabbage White",           common:"Butterfly & Larva"},
+  {id:3, name:"Capsid Bug",              common:"Insect Pest"},
+  {id:4, name:"Chafer Grub",             common:"Beetle Larva"},
+  {id:5, name:"Flea Beetle",             common:"Phyllotreta"},
+  {id:6, name:"Frog Hopper",             common:"Insect Pest"},
+  {id:7, name:"Glasshouse Red Spider Mite", common:"Arachnid Pest"},
+  {id:8, name:"Horse Chestnut Leaf Miner",  common:"Moth Larva"},
+  {id:9, name:"Lily Beetle",             common:"Insect Pest"},
+  {id:10,name:"Mealybug",               common:"Scale Insect"},
+  {id:11,name:"Scale Insect",           common:"Insect Pest"},
+  {id:12,name:"Sciarid Fly",            common:"Fungus Gnat"},
+  {id:13,name:"Slug",                   common:"Mollusc Pest"},
+  {id:14,name:"Vine Weevil",            common:"Adult & Larvae"},
+  {id:15,name:"Whitefly",               common:"Brassica & Glasshouse"},
+  {id:16,name:"Black Spot",             common:"Fungal Disease"},
+  {id:17,name:"Botrytis",              common:"Grey Mould"},
+  {id:18,name:"Box Blight",            common:"Fungal Disease"},
+  {id:19,name:"Bacterial Canker",      common:"Bacterial Disease"},
+  {id:20,name:"Damping Off",           common:"Seedling Disease"},
+  {id:21,name:"Downy Mildew",          common:"Fungal Disease"},
+  {id:22,name:"Honey Fungus",          common:"Fungal Disease"},
+  {id:23,name:"Pear Rust",             common:"Fungal Disease"},
+  {id:24,name:"Powdery Mildew",        common:"Fungal Disease"},
+  {id:25,name:"Fasciation",            common:"Physiological Disorder"}
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+
+let category    = 'plants';   // 'plants' | 'pests'
+let chosenMode  = 'flash';    // menu selection
+let viewMode    = 'card';     // card | quiz | grid
+let currentList = [];         // active filtered list
+let masterList  = [];         // full list for current category
+let imageCache  = {};         // id → {url1, url2, common} or 'error'
+let currentIndex = 0;
+let isFlipped    = false;
+
+// Quiz state
+let quizAnswered = false;
+let quizScore    = 0;
+let quizTotal    = 0;
+let quizIdx      = 0;
+let quizOrder    = [];
+
+// ═══════════════════════════════════════════════════════
+// MENU
+// ═══════════════════════════════════════════════════════
+
+function selectMode(m) {
+  chosenMode = m;
+  document.querySelectorAll('.mode-pill').forEach(p => p.classList.remove('selected','pests-selected'));
+  const pill = document.getElementById('pill' + m.charAt(0).toUpperCase() + m.slice(1));
+  if (pill) pill.classList.add('selected');
+}
+
+function launchApp(cat) {
+  category = cat;
+  masterList = cat === 'plants' ? [...PLANTS] : [...PESTS];
+  currentList = [...masterList];
+
+  // Build image cache from JS globals
+  imageCache = {};
+  const rawCache = cat === 'plants'
+    ? (window.PLANT_IMAGE_CACHE || {})
+    : (window.PEST_IMAGE_CACHE  || {});
+
+  masterList.forEach(item => {
+    const e = rawCache[item.id];
+    if (!e || e === 'error') {
+      imageCache[item.id] = 'error';
+    } else if (typeof e === 'object') {
+      // Support both single-url format and dual-url format
+      imageCache[item.id] = {
+        url1:   e.url  || e.url1 || null,
+        url2:   e.url2 || null,
+        common: e.common || item.common || ''
+      };
+    } else {
+      imageCache[item.id] = 'error';
+    }
+  });
+
+  // Update UI chrome
+  const isPests = cat === 'pests';
+  const header  = document.getElementById('appHeader');
+  header.className = isPests ? 'pests-header' : '';
+  document.getElementById('appTitle').innerHTML =
+    isPests
+      ? '🐛 Pest &amp; Disease <em>Identification</em> Flashcards'
+      : '🌿 Plant <em>Identification</em> Flashcards';
+  document.getElementById('loadStatus').textContent =
+    masterList.length + ' items loaded';
+
+  document.getElementById('menuScreen').style.display = 'none';
+  const app = document.getElementById('appScreen');
+  app.style.display = 'flex';
+
+  document.getElementById('searchInput').value = '';
+  currentIndex = 0;
+
+  // Launch in the chosen mode
+  const modeMap = { flash:'card', quiz:'quiz', grid:'grid' };
+  setViewMode(modeMap[chosenMode] || 'card');
+}
+
+function goMenu() {
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('menuScreen').style.display = 'flex';
+  document.getElementById('searchInput').value = '';
+}
+
+// ═══════════════════════════════════════════════════════
+// VIEW SWITCHING
+// ═══════════════════════════════════════════════════════
+
+function setViewMode(m) {
+  viewMode = m;
+  document.getElementById('cardMode').style.display = m === 'card'  ? 'block' : 'none';
+  document.getElementById('quizMode').style.display = m === 'quiz'  ? 'block' : 'none';
+  document.getElementById('gridMode').style.display = m === 'grid'  ? 'block' : 'none';
+  document.getElementById('navControls').style.display   = m === 'card'  ? 'flex' : 'none';
+  document.getElementById('shuffleControls').style.display = m !== 'quiz' ? 'flex' : 'none';
+
+  document.getElementById('btnCard').className = m === 'card' ? 'btn btn-primary' : 'btn btn-secondary';
+  document.getElementById('btnQuiz').className = m === 'quiz' ? 'btn btn-primary' : 'btn btn-secondary';
+  document.getElementById('btnGrid').className = m === 'grid' ? 'btn btn-primary' : 'btn btn-secondary';
+
+  if (m === 'card')  showCard(currentIndex);
+  if (m === 'grid')  renderGrid();
+  if (m === 'quiz')  startQuiz();
+}
+
+// ═══════════════════════════════════════════════════════
+// FLASHCARD
+// ═══════════════════════════════════════════════════════
+
+function makeImageSlot(url, label) {
+  const slot = document.createElement('div');
+  slot.className = 'card-image-slot';
+  if (url) {
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = label;
+    img.onerror = () => { slot.innerHTML = '<div class="image-error" style="height:100%">No Image</div>'; };
+    slot.appendChild(img);
+    const lbl = document.createElement('div');
+    lbl.className = 'img-label';
+    lbl.textContent = label;
+    slot.appendChild(lbl);
+  } else {
+    slot.innerHTML = '<div class="image-error" style="height:100%">No Image</div>';
+  }
+  return slot;
+}
+
+function showCard(idx) {
+  if (currentList.length === 0) return;
+  currentIndex = idx;
+  isFlipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+
+  const item  = currentList[currentIndex];
+  const cache = imageCache[item.id];
+  const row   = document.getElementById('cardImagesRow');
+  row.innerHTML = '';
+
+  if (!cache || cache === 'error') {
+    const slot = document.createElement('div');
+    slot.className = 'card-image-slot';
+    slot.innerHTML = '<div class="image-error" style="height:100%">No Images</div>';
+    row.appendChild(slot);
+  } else {
+    row.appendChild(makeImageSlot(cache.url1, 'Image 1'));
+    if (cache.url2) {
+      row.appendChild(makeImageSlot(cache.url2, 'Image 2'));
+    }
+  }
+
+  document.getElementById('backNumber').textContent = `#${item.id}`;
+  document.getElementById('backName').textContent   = item.name;
+  const cn = (cache && cache !== 'error' && cache.common) ? cache.common : (item.common || '');
+  document.getElementById('backCommon').textContent  = cn;
+
+  document.getElementById('cardCounter').textContent = `${currentIndex + 1} / ${currentList.length}`;
+
+  document.querySelectorAll('.grid-item').forEach(el => el.classList.remove('active-card'));
+  const gi = document.querySelector(`.grid-item[data-id="${item.id}"]`);
+  if (gi) gi.classList.add('active-card');
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped', isFlipped);
+}
+
+function nextCard() {
+  if (!currentList.length) return;
+  showCard((currentIndex + 1) % currentList.length);
+}
+
+function prevCard() {
+  if (!currentList.length) return;
+  showCard((currentIndex - 1 + currentList.length) % currentList.length);
+}
+
+function doShuffle() {
+  currentList = currentList.sort(() => Math.random() - 0.5);
+  if (viewMode === 'card') showCard(0);
+  else if (viewMode === 'grid') renderGrid();
+}
+
+function resetOrder() {
+  currentList = currentList.sort((a, b) => a.id - b.id);
+  if (viewMode === 'card') showCard(0);
+  else if (viewMode === 'grid') renderGrid();
+}
+
+document.addEventListener('keydown', e => {
+  if (viewMode !== 'card') return;
+  if (e.key === 'ArrowRight') nextCard();
+  else if (e.key === 'ArrowLeft') prevCard();
+  else if (e.key === ' ') { e.preventDefault(); flipCard(); }
+});
+
+// ═══════════════════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════════════════
+
+function startQuiz() {
+  quizScore = 0;
+  quizTotal = 0;
+  quizIdx   = 0;
+  quizOrder = [...Array(currentList.length).keys()].sort(() => Math.random() - 0.5);
+  showQuizQuestion();
+}
+
+function showQuizQuestion() {
+  quizAnswered = false;
+  document.getElementById('quizFeedback').textContent = '';
+  document.getElementById('quizNextBtn').style.display = 'none';
+
+  if (quizIdx >= quizOrder.length) {
+    document.getElementById('quizImageRow').innerHTML =
+      `<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--sage);font-size:1.1rem;font-family:'Playfair Display',serif;font-style:italic;">
+        Quiz complete! Score: ${quizScore} / ${quizTotal}
+      </div>`;
+    document.getElementById('quizChoices').innerHTML = '';
+    document.getElementById('quizScore').textContent = '';
+    document.getElementById('quizNextBtn').textContent = 'Restart Quiz';
+    document.getElementById('quizNextBtn').style.display = 'block';
+    document.getElementById('quizNextBtn').onclick = startQuiz;
+    return;
+  }
+
+  const item  = currentList[quizOrder[quizIdx]];
+  const cache = imageCache[item.id];
+
+  // Build image row
+  const row = document.getElementById('quizImageRow');
+  row.innerHTML = '';
+  if (!cache || cache === 'error') {
+    const slot = document.createElement('div');
+    slot.className = 'quiz-img-slot';
+    slot.innerHTML = '<div style="color:var(--sage);font-size:0.9rem;">No Image</div>';
+    row.appendChild(slot);
+  } else {
+    [cache.url1, cache.url2].filter(Boolean).forEach((url, i) => {
+      const slot = document.createElement('div');
+      slot.className = 'quiz-img-slot';
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = 'Identify this';
+      img.onerror = () => { slot.innerHTML = '<div style="color:var(--sage);font-size:0.8rem;">No Image</div>'; };
+      slot.appendChild(img);
+      const lbl = document.createElement('div');
+      lbl.className = 'img-label';
+      lbl.textContent = 'Image ' + (i + 1);
+      slot.appendChild(lbl);
+      row.appendChild(slot);
+    });
+  }
+
+  // Build choices: correct + 3 random distractors
+  const correctIdx = quizOrder[quizIdx];
+  const pool = [...Array(currentList.length).keys()].filter(i => i !== correctIdx);
+  const distractors = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+  const allChoices  = [correctIdx, ...distractors].sort(() => Math.random() - 0.5);
+
+  const choicesDiv = document.getElementById('quizChoices');
+  choicesDiv.innerHTML = '';
+  allChoices.forEach(choiceIdx => {
+    const choiceItem = currentList[choiceIdx];
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = choiceItem.name;
+    btn.dataset.isCorrect = (choiceIdx === correctIdx) ? '1' : '0';
+    btn.onclick = () => handleAnswer(btn, item, choicesDiv);
+    choicesDiv.appendChild(btn);
+  });
+
+  document.getElementById('quizScore').textContent =
+    quizTotal > 0 ? `Score: ${quizScore} / ${quizTotal}` : '';
+  document.getElementById('quizNextBtn').onclick = nextQuiz;
+}
+
+function handleAnswer(btn, correctItem, choicesDiv) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  quizTotal++;
+
+  const isCorrect = btn.dataset.isCorrect === '1';
+  if (isCorrect) {
+    quizScore++;
+    btn.classList.add('correct');
+    document.getElementById('quizFeedback').textContent = '✓ Correct!';
+    document.getElementById('quizFeedback').style.color = '#2a7a2a';
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('quizFeedback').textContent = '✗ Incorrect';
+    document.getElementById('quizFeedback').style.color = '#c05040';
+    // Reveal correct answer
+    choicesDiv.querySelectorAll('.choice-btn').forEach(b => {
+      if (b.dataset.isCorrect === '1') b.classList.add('correct');
+    });
+  }
+
+  choicesDiv.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+  document.getElementById('quizScore').textContent = `Score: ${quizScore} / ${quizTotal}`;
+  document.getElementById('quizNextBtn').style.display = 'block';
+  document.getElementById('quizNextBtn').textContent = 'Next Question →';
+}
+
+function nextQuiz() {
+  quizIdx++;
+  showQuizQuestion();
+}
+
+// ═══════════════════════════════════════════════════════
+// GRID
+// ═══════════════════════════════════════════════════════
+
+function renderGrid() {
+  const grid = document.getElementById('plantGrid');
+  grid.innerHTML = '';
+  document.getElementById('gridHeading').textContent =
+    currentList.length === masterList.length
+      ? `All ${masterList.length} items`
+      : `${currentList.length} items found`;
+
+  currentList.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'grid-item' + (idx === currentIndex ? ' active-card' : '');
+    div.dataset.id = item.id;
+    div.onclick = () => { currentIndex = idx; setViewMode('card'); };
+
+    const cache    = imageCache[item.id];
+    const thumbDiv = document.createElement('div');
+    thumbDiv.className = 'grid-thumb';
+
+    if (!cache || cache === 'error') {
+      thumbDiv.innerHTML = '<span class="mini-error">No Image</span>';
+    } else {
+      [cache.url1, cache.url2].filter(Boolean).forEach(url => {
+        const slot = document.createElement('div');
+        slot.className = 'grid-thumb-slot';
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = item.name;
+        img.onerror = () => { slot.innerHTML = '<span class="mini-error">✕</span>'; };
+        slot.appendChild(img);
+        thumbDiv.appendChild(slot);
+      });
+      if (!cache.url1 && !cache.url2) {
+        thumbDiv.innerHTML = '<span class="mini-error">No Image</span>';
+      }
+    }
+
+    div.appendChild(thumbDiv);
+
+    const labelDiv = document.createElement('div');
+    labelDiv.className = 'grid-label';
+    labelDiv.innerHTML = `<span class="grid-id">#${item.id}</span>${item.name}`;
+    div.appendChild(labelDiv);
+
+    grid.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// SEARCH / FILTER
+// ═══════════════════════════════════════════════════════
+
+function filterItems() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  currentList = q
+    ? masterList.filter(p => p.name.toLowerCase().includes(q) || (p.common && p.common.toLowerCase().includes(q)))
+    : [...masterList];
+  currentIndex = 0;
+  if (viewMode === 'card') showCard(0);
+  else if (viewMode === 'grid') renderGrid();
+  else if (viewMode === 'quiz') startQuiz();
+}
+</script>
+</body>
+</html>

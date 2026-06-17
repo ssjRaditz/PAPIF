@@ -1,0 +1,25 @@
+1,Black bean aphid
+2,Cabbage white (butterfly and larva) 
+3,Capsid bug
+4,Chafer grub
+5,Flea beetle (Phyllotreta) 
+6,Frog hopper 
+7,Glasshouse red spider mite
+8,Horse chestnut leaf miner
+9,Lily beetle 
+10,Mealybug
+11,Scale insect 
+12,Sciarid fly 
+13,Slug
+14,Vine weevil (adult and larvae) 
+15,Whitefly (brassica and glasshouse) 
+16,Black spot 
+17,Botrytis
+18,Box blight 
+19,Bacterial canker
+20,Damping off
+21,Downy mildew
+22,Honey fungus 
+23,Pear rust 
+24,Powdery mildew
+25,Fascination 

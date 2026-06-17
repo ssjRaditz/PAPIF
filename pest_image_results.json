@@ -1,0 +1,152 @@
+{
+  "1": {
+    "url": "local_file",
+    "url1": "pest_images/1a.png",
+    "url2": "pest_images/1b.png",
+    "common": "Black bean aphid"
+  },
+  "2": {
+    "url": "local_file",
+    "url1": "pest_images/2a.png",
+    "url2": "pest_images/2b.png",
+    "common": "Cabbage white (butterfly and larva)"
+  },
+  "3": {
+    "url": "local_file",
+    "url1": "pest_images/3a.png",
+    "url2": "pest_images/3b.png",
+    "common": "Capsid bug"
+  },
+  "4": {
+    "url": "local_file",
+    "url1": "pest_images/4a.png",
+    "url2": "pest_images/4b.png",
+    "common": "Chafer grub"
+  },
+  "5": {
+    "url": "local_file",
+    "url1": "pest_images/5a.png",
+    "url2": "pest_images/5b.png",
+    "common": "Flea beetle (Phyllotreta)"
+  },
+  "6": {
+    "url": "local_file",
+    "url1": "pest_images/6a.png",
+    "url2": "pest_images/6b.png",
+    "common": "Frog hopper"
+  },
+  "7": {
+    "url": "local_file",
+    "url1": "pest_images/7a.png",
+    "url2": "pest_images/7b.png",
+    "common": "Glasshouse red spider mite"
+  },
+  "8": {
+    "url": "local_file",
+    "url1": "pest_images/8a.png",
+    "url2": "pest_images/8b.png",
+    "common": "Horse chestnut leaf miner"
+  },
+  "9": {
+    "url": "local_file",
+    "url1": "pest_images/9a.png",
+    "url2": "pest_images/9b.png",
+    "common": "Lily beetle"
+  },
+  "10": {
+    "url": "local_file",
+    "url1": "pest_images/10a.png",
+    "url2": "pest_images/10b.png",
+    "common": "Mealybug"
+  },
+  "11": {
+    "url": "local_file",
+    "url1": "pest_images/11a.png",
+    "url2": "pest_images/11b.png",
+    "common": "Scale insect"
+  },
+  "12": {
+    "url": "local_file",
+    "url1": "pest_images/12a.png",
+    "url2": "pest_images/12b.png",
+    "common": "Sciarid fly"
+  },
+  "13": {
+    "url": "local_file",
+    "url1": "pest_images/13a.png",
+    "url2": "pest_images/13b.png",
+    "common": "Slug"
+  },
+  "14": {
+    "url": "local_file",
+    "url1": "pest_images/14a.png",
+    "url2": "pest_images/14b.png",
+    "common": "Vine weevil (adult and larvae)"
+  },
+  "15": {
+    "url": "local_file",
+    "url1": "pest_images/15a.png",
+    "url2": "pest_images/15b.png",
+    "common": "Whitefly (brassica and glasshouse)"
+  },
+  "16": {
+    "url": "local_file",
+    "url1": "pest_images/16a.png",
+    "url2": null,
+    "common": "Black spot"
+  },
+  "17": {
+    "url": "local_file",
+    "url1": "pest_images/17a.png",
+    "url2": null,
+    "common": "Botrytis"
+  },
+  "18": {
+    "url": "local_file",
+    "url1": "pest_images/18a.png",
+    "url2": null,
+    "common": "Box blight"
+  },
+  "19": {
+    "url": "local_file",
+    "url1": "pest_images/19a.png",
+    "url2": null,
+    "common": "Bacterial canker"
+  },
+  "20": {
+    "url": "local_file",
+    "url1": "pest_images/20a.png",
+    "url2": null,
+    "common": "Damping off"
+  },
+  "21": {
+    "url": "local_file",
+    "url1": "pest_images/21a.png",
+    "url2": null,
+    "common": "Downy mildew"
+  },
+  "22": {
+    "url": "local_file",
+    "url1": "pest_images/22a.png",
+    "url2": null,
+    "common": "Honey fungus"
+  },
+  "23": {
+    "url": "local_file",
+    "url1": "pest_images/23a.png",
+    "url2": null,
+    "common": "Pear rust"
+  },
+  "24": {
+    "url": "local_file",
+    "url1": "pest_images/24a.png",
+    "url2": null,
+    "common": "Powdery mildew"
+  },
+  "25": {
+    "url": "local_file",
+    "url1": "pest_images/25a.png",
+    "url2": null,
+    "common": "Fascination"
+  }
+}

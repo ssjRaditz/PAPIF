@@ -1,0 +1,10 @@
+# PyInstaller & Build artifacts
+build/
+dist/
+*.pyc
+*.spec
+__pycache__/
+
+# System files
+.DS_Store
+Thumbs.db
