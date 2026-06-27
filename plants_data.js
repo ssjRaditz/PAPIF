@@ -57,7 +57,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 15,
-    "name": "Astrantia major cv."
+    "name": "Astrantia major cv. \u2018Buckland\u2019"
   },
   {
     "id": 16,
@@ -89,11 +89,11 @@ window.PLANTS_DATA = [
   },
   {
     "id": 23,
-    "name": "Campsis radicans cv."
+    "name": "Campsis radicans cv. \u2018Flamenco\u2019"
   },
   {
     "id": 24,
-    "name": "Canna indica cv."
+    "name": "Canna indica cv. \u2018Tropicana Black\u2019"
   },
   {
     "id": 25,
@@ -105,7 +105,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 27,
-    "name": "Choisya ternata 'Sundance'"
+    "name": "Choisya ternata cv. \u2018Sundance\u2019"
   },
   {
     "id": 28,
@@ -121,7 +121,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 31,
-    "name": "Cornus sanguinea cv."
+    "name": "Cornus sanguinea cv. \u2018Midwinter Fire\u2019"
   },
   {
     "id": 32,
@@ -161,7 +161,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 41,
-    "name": "Echinacea purpurea cv."
+    "name": "Echinacea purpurea cv. \u2018Prairie Splendor\u2019"
   },
   {
     "id": 42,
@@ -205,11 +205,11 @@ window.PLANTS_DATA = [
   },
   {
     "id": 52,
-    "name": "Hamamelis mollis cv."
+    "name": "Hamamelis mollis cv. \u2018Pallida\u2019"
   },
   {
     "id": 53,
-    "name": "Hedera helix cv."
+    "name": "Hedera helix cv. \u2018Gold Heart\u2019"
   },
   {
     "id": 54,
@@ -217,7 +217,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 55,
-    "name": "Helleborus x hybridus cv."
+    "name": "Helleborus x hybridus cv. \u2018Blue Metallic Lady\u2019"
   },
   {
     "id": 56,
@@ -253,7 +253,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 64,
-    "name": "Lonicera periclymenum cv."
+    "name": "Lonicera periclymenum cv. \u2018Serotina\u2019"
   },
   {
     "id": 65,
@@ -269,7 +269,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 68,
-    "name": "Miscanthus sinensis cv."
+    "name": "Miscanthus sinensis cv. \u2018Zebrinus\u2019"
   },
   {
     "id": 69,
@@ -301,7 +301,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 76,
-    "name": "Phlox paniculata cv."
+    "name": "Phlox paniculata cv. \u2018White Admiral\u2019"
   },
   {
     "id": 77,
@@ -309,7 +309,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 78,
-    "name": "Photinia x fraseri \u2018Red Robin\u2019"
+    "name": "Photinia x fraseri cv. \u2018Red Robin\u2019"
   },
   {
     "id": 79,
@@ -361,11 +361,11 @@ window.PLANTS_DATA = [
   },
   {
     "id": 91,
-    "name": "Salvia nemorosa cv."
+    "name": "Salvia nemorosa cv. \u2018Ostfriesland\u2019"
   },
   {
     "id": 92,
-    "name": "Sansevieria trifasciata cv."
+    "name": "Sansevieria trifasciata cv. \u2018Laurentii\u2019"
   },
   {
     "id": 93,
@@ -393,7 +393,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 99,
-    "name": "Symphyotrichum novi-belgii cv."
+    "name": "Symphyotrichum novi-belgii cv. \u2018Samoa\u2019"
   },
   {
     "id": 100,
@@ -429,7 +429,7 @@ window.PLANTS_DATA = [
   },
   {
     "id": 108,
-    "name": "Vinca major cv."
+    "name": "Vinca major cv. \u2018Variegata\u2019"
   },
   {
     "id": 109,
