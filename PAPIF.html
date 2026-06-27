@@ -397,7 +397,7 @@
     background: var(--white);
     font-family: 'Playfair Display', serif;
     font-size: 0.92rem;
-	font-weight: 500;
+    font-style: italic;
     color: var(--bark);
     cursor: pointer;
     text-align: left;
@@ -485,11 +485,9 @@
   }
 </style>
 
-
+<!-- Image cache files — plant_image_data.js must exist; pest_image_data.js is optional -->
 <script src="plant_image_data.js" onerror="console.warn('plant_image_data.js not found')"></script>
 <script src="pest_image_data.js" onerror="console.warn('pest_image_data.js not found')"></script>
-<script src="plants_data.js" onerror="console.warn('plants_data.js not found')"></script>
-<script src="pests_data.js" onerror="console.warn('pests_data.js not found')"></script>
 </head>
 <body>
 
@@ -620,47 +618,47 @@ const PLANTS = [
   {id:12,name:"Arbutus unedo",common:"Strawberry Tree"},
   {id:13,name:"Armeria maritima",common:"Thrift"},
   {id:14,name:"Asplenium scolopendrium",common:"Hart's Tongue Fern"},
-  {id:15,name:"Astrantia major cv.",common:"Greater Masterwort"},
+  {id:15,name:"Astrantia major cv. \u2018Buckland\u2019",common:"Greater Masterwort"},
   {id:16,name:"Bellis perennis",common:"Daisy"},
   {id:17,name:"Berberis darwinii",common:"Darwin's Barberry"},
   {id:18,name:"Betula pendula",common:"Silver Birch"},
   {id:19,name:"Buddleja davidii",common:"Butterfly Bush"},
   {id:20,name:"Buxus sempervirens",common:"Common Box"},
-  {id:21,name:"Caltha palustris",common:"Marsh Marigold"},
-  {id:22,name:"Calystegia sepium",common:"Hedge Bindweed"},
-  {id:23,name:"Campsis radicans cv.",common:"Trumpet Vine"},
-  {id:24,name:"Canna indica cv.",common:"Indian Shot"},
+  {id:21,name:"Caltha palustris cv. \u2018Flore Pleno\u2019",common:"Marsh Marigold"},
+  {id:22,name:"Calystegia sepium cv. \u2018Flore Pleno\u2019",common:"Hedge Bindweed"},
+  {id:23,name:"Campsis radicans cv. \u2018Flamenco\u2019",common:"Trumpet Vine"},
+  {id:24,name:"Canna indica cv. \u2018Tropicana Black\u2019",common:"Indian Shot"},
   {id:25,name:"Capsella bursa-pastoris",common:"Shepherd's Purse"},
   {id:26,name:"Centaurea cyanus",common:"Cornflower"},
-  {id:27,name:"Choisya ternata 'Sundance'",common:"Mexican Orange Blossom"},
+  {id:27,name:"Choisya ternata cv. \u2018Sundance\u2019",common:"Mexican Orange Blossom"},
   {id:28,name:"Clematis armandi",common:"Armand Clematis"},
   {id:29,name:"Clivia miniata",common:"Natal Lily"},
   {id:30,name:"Cordyline australis",common:"Cabbage Palm"},
-  {id:31,name:"Cornus sanguinea cv.",common:"Common Dogwood"},
+  {id:31,name:"Cornus sanguinea cv. \u2018Midwinter Fire\u2019",common:"Common Dogwood"},
   {id:32,name:"Corydalis flexuosa",common:"Blue Corydalis"},
   {id:33,name:"Corylus avellana",common:"Hazel"},
   {id:34,name:"Cosmos bipinnatus",common:"Cosmea"},
   {id:35,name:"Cotinus coggygria",common:"Smoke Tree"},
   {id:36,name:"Crataegus monogyna",common:"Common Hawthorn"},
   {id:37,name:"Cyclamen hederifolium",common:"Ivy-leaved Cyclamen"},
-  {id:38,name:"Dahlia 'Bishop of Llandaff'",common:"Dahlia 'Bishop of Llandaff'"},
+  {id:38,name:"Dahlia cv. \u2018Bishop of Llandaff\u2019",common:"Dahlia 'Bishop of Llandaff'"},
   {id:39,name:"Daphne bholua",common:"Nepalese Paper Plant"},
   {id:40,name:"Daucus carota",common:"Wild Carrot"},
-  {id:41,name:"Echinacea purpurea cv.",common:"Purple Coneflower"},
+  {id:41,name:"Echinacea purpurea cv. \u2018Prairie Splendor\u2019",common:"Purple Coneflower"},
   {id:42,name:"Ceratophyllum demersum",common:"Hornwort"},
   {id:43,name:"Elymus repens",common:"Couch Grass"},
   {id:44,name:"Eryngium giganteum",common:"Silver Ghost"},
   {id:45,name:"Euphorbia characias subsp. wulfenii",common:"Mediterranean Spurge"},
   {id:46,name:"Fagus sylvatica",common:"Common Beech"},
   {id:47,name:"Fatsia japonica",common:"Japanese Aralia"},
-  {id:48,name:"Forsythia × intermedia",common:"Forsythia"},
+  {id:48,name:"Forsythia x intermedia",common:"Forsythia"},
   {id:49,name:"Fritillaria meleagris",common:"Snake's Head Fritillary"},
   {id:50,name:"Ginkgo biloba",common:"Maidenhair Tree"},
   {id:51,name:"Griselinia littoralis",common:"New Zealand Broadleaf"},
-  {id:52,name:"Hamamelis mollis cv.",common:"Chinese Witch Hazel"},
-  {id:53,name:"Hedera helix cv.",common:"Common Ivy"},
+  {id:52,name:"Hamamelis mollis cv. \u2018Pallida\u2019",common:"Chinese Witch Hazel"},
+  {id:53,name:"Hedera helix cv. \u2018Gold Heart\u2019",common:"Common Ivy"},
   {id:54,name:"Heliotropium arborescens",common:"Common Heliotrope"},
-  {id:55,name:"Helleborus × hybridus cv.",common:"Hybrid Lenten Rose"},
+  {id:55,name:"Helleborus x hybridus cv. \u2018Blue Metallic Lady\u2019",common:"Hybrid Lenten Rose"},
   {id:56,name:"Ilex aquifolium",common:"Common Holly"},
   {id:57,name:"Iris pseudacorus",common:"Yellow Iris"},
   {id:58,name:"Lavandula angustifolia",common:"English Lavender"},
@@ -669,21 +667,21 @@ const PLANTS = [
   {id:61,name:"Ligustrum ovalifolium",common:"Garden Privet"},
   {id:62,name:"Liriope muscari",common:"Big Blue Lilyturf"},
   {id:63,name:"Lobelia cardinalis",common:"Cardinal Flower"},
-  {id:64,name:"Lonicera periclymenum cv.",common:"Common Honeysuckle"},
+  {id:64,name:"Lonicera periclymenum cv. \u2018Serotina\u2019",common:"Common Honeysuckle"},
   {id:65,name:"Magnolia stellata",common:"Star Magnolia"},
   {id:66,name:"Matteuccia struthiopteris",common:"Shuttlecock Fern"},
   {id:67,name:"Metasequoia glyptostroboides",common:"Dawn Redwood"},
-  {id:68,name:"Miscanthus sinensis cv.",common:"Eulalia"},
+  {id:68,name:"Miscanthus sinensis cv. \u2018Zebrinus\u2019",common:"Eulalia"},
   {id:69,name:"Monstera deliciosa",common:"Swiss Cheese Plant"},
   {id:70,name:"Muscari armeniacum",common:"Armenian Grape Hyacinth"},
   {id:71,name:"Nigella damascena",common:"Love-in-a-mist"},
   {id:72,name:"Oenothera biennis",common:"Common Evening Primrose"},
-  {id:73,name:"Ophiopogon planiscapus 'Kokuryū'",common:"Black Mondo"},
+  {id:73,name:"Ophiopogon planiscapus cv. \u2018Kokuryū\u2019",common:"Black Mondo"},
   {id:74,name:"Parthenocissus quinquefolia",common:"Virginia Creeper"},
   {id:75,name:"Phlomis fruticosa",common:"Jerusalem Sage"},
-  {id:76,name:"Phlox paniculata cv.",common:"Perennial Phlox"},
+  {id:76,name:"Phlox paniculata cv. \u2018White Admiral\u2019",common:"Perennial Phlox"},
   {id:77,name:"Phormium tenax",common:"New Zealand Flax"},
-  {id:78,name:"Photinia × fraseri 'Red Robin'",common:"Christmas Berry 'Red Robin'"},
+  {id:78,name:"Photinia x fraseri cv. \u2018Red Robin\u2019",common:"Christmas Berry 'Red Robin'"},
   {id:79,name:"Phyllostachys aurea",common:"Fish-pole Bamboo"},
   {id:80,name:"Plantago major",common:"Greater Plantain"},
   {id:81,name:"Pontederia cordata",common:"Pickerel Weed"},
@@ -696,15 +694,15 @@ const PLANTS = [
   {id:88,name:"Rhinanthus minor",common:"Yellow Rattle"},
   {id:89,name:"Rudbeckia fulgida var. deamii",common:"Deam's Coneflower"},
   {id:90,name:"Salvia rosmarinus",common:"Rosemary"},
-  {id:91,name:"Salvia nemorosa cv.",common:"Balkan Clary"},
-  {id:92,name:"Sansevieria trifasciata cv.",common:"Mother-in-law's Tongue"},
+  {id:91,name:"Salvia nemorosa cv. \u2018Ostfriesland\u2019",common:"Balkan Clary"},
+  {id:92,name:"Sansevieria trifasciata cv. \u2018Laurentii\u2019",common:"Mother-in-law's Tongue"},
   {id:93,name:"Sarcococca confusa",common:"Sweet Box"},
   {id:94,name:"Sempervivum arachnoideum",common:"Cobweb Houseleek"},
   {id:95,name:"Skimmia japonica",common:"Japanese Skimmia"},
   {id:96,name:"Spathiphyllum wallisii",common:"Peace Lily"},
   {id:97,name:"Stellaria media",common:"Common Chickweed"},
   {id:98,name:"Stipa gigantea",common:"Golden Oats"},
-  {id:99,name:"Symphyotrichum novi-belgii cv.",common:"New York Aster"},
+  {id:99,name:"Symphyotrichum novi-belgii cv. \u2018Samoa\u2019",common:"New York Aster"},
   {id:100,name:"Tagetes erecta",common:"African Marigold"},
   {id:101,name:"Taraxacum officinale",common:"Dandelion"},
   {id:102,name:"Taxus baccata",common:"Common Yew"},
@@ -713,7 +711,7 @@ const PLANTS = [
   {id:105,name:"Urtica dioica",common:"Common Stinging Nettle"},
   {id:106,name:"Verbena bonariensis",common:"Purple Top"},
   {id:107,name:"Viburnum davidii",common:"David Viburnum"},
-  {id:108,name:"Vinca major cv.",common:"Greater Periwinkle"},
+  {id:108,name:"Vinca major cv. \u2018Variegata\u2019",common:"Greater Periwinkle"},
   {id:109,name:"Wisteria sinensis",common:"Chinese Wisteria"},
   {id:110,name:"Zamioculcas zamiifolia",common:"Fern Arum"}
 ];
