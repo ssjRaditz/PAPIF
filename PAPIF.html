@@ -531,7 +531,7 @@
 <!-- ══════════════════════════════════════
      MENU SCREEN
 ════════════════════════════════════════ -->
-<div id="menuScreen">
+<div id="menuScreen" style=" justify-content:start;">
   <div class="menu-title">
     <h1>🌿 <em>Identification</em> Flashcards</h1>
     <p>Choose a category and study mode to begin</p>
@@ -559,28 +559,30 @@
     </div>
   </div>
 
-  <div class="menu-categories" id="pestSubcategories" style="display:none;">
-    <button class="back-btn" onclick="backToMainMenu()" style="position:absolute;top:20px;left:20px;">← Back</button>
-    <div style="text-align:center;margin-bottom:20px;">
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rust);">Select Pest Collection</h2>
+<div class="menu-categories" id="pestSubcategories" style="display:none; justify-content:start;">    
+    <div style="text-align:center;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rust);">Select Pest Collection</h2>
     </div>
     <div class="menu-categories" style="gap:28px;">
-      <div class="category-card pests" onclick="launchApp('pests-all')">
-        <div class="category-icon">🐛</div>
-        <h2>All Pests</h2>
-        <p>25 pests, diseases &amp; disorders</p>
-      </div>
-      <div class="category-card pests" onclick="launchApp('pests-ncc')">
-        <div class="category-icon">🌿</div>
-        <h2>Non-Chemical Control</h2>
-        <p>8 pests &amp; diseases with controls</p>
-      </div>
-    </div>
-  </div>
+        <div class="category-card pests" onclick="launchApp('pests-all')">
+            <div class="category-icon">🐛</div>
+            <h2>All Pests</h2>
+            <p>25 pests, diseases &amp; disorders</p>
+        </div>
+        <div class="category-card pests" onclick="launchApp('pests-ncc')">
+            <div class="category-icon">🌿</div>
+            <h2>Non-Chemical Control</h2>
+            <p>8 pests &amp; diseases with controls</p>
+        </div>
+        <div class="category-card pests" onclick="backToMainMenu()">
+            <div class="category-icon">←</div>
+            <h2>Back</h2>
+        </div>
+    </div> 
+</div>
 
-  <div class="menu-categories" id="plantSubcategories" style="display:none;">
-    <button class="back-btn" onclick="backToMainMenu()" style="position:absolute;top:20px;left:20px;">← Back</button>
-    <div style="text-align:center;margin-bottom:20px;">
+  <div class="menu-categories" id="plantSubcategories" style="display:none; justify-content:start;">
+    <div style="text-align:center;">
       <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--moss);">Select Plant Collection</h2>
     </div>
     <div class="menu-categories" style="gap:28px;">
@@ -593,6 +595,10 @@
         <div class="category-icon">🌾</div>
         <h2>PCA 2</h2>
         <p>64 selected plants</p>
+      </div>
+      <div class="category-card plants" onclick="backToMainMenu()" >
+        <div class="category-icon">←</div>
+        <h2>Back</h2>
       </div>
     </div>
   </div>
@@ -884,7 +890,10 @@ function showPestSubcategories() {
 }
 
 function backToMainMenu() {
+  // Show the main landing category cards
   document.getElementById('mainCategories').style.display = 'flex';
+  
+  // Hide both subcategory panels
   document.getElementById('plantSubcategories').style.display = 'none';
   document.getElementById('pestSubcategories').style.display = 'none';
 }
@@ -964,6 +973,7 @@ function goMenu() {
   document.getElementById('appScreen').style.display = 'none';
   document.getElementById('menuScreen').style.display = 'flex';
   document.getElementById('searchInput').value = '';
+  backToMainMenu();
 }
 
 // ═══════════════════════════════════════════════════════
