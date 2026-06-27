@@ -364,6 +364,30 @@
   .common-name { font-size: 1rem; color: var(--clay); font-weight: 500; }
   .back-flip-hint { margin-top: 28px; font-size: 0.72rem; color: #bbb; letter-spacing: 0.06em; text-transform: uppercase; }
 
+  .ncc-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--mist);
+    width: 100%;
+    text-align: center;
+  }
+
+  .ncc-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .ncc-text {
+    font-size: 0.9rem;
+    color: var(--bark);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
   /* ── QUIZ MODE ── */
   #quizMode { width: 100%; max-width: 700px; display: none; }
 
@@ -528,10 +552,29 @@
       <h2>Plants</h2>
       <p>110 botanical specimens</p>
     </div>
-    <div class="category-card pests" onclick="launchApp('pests')">
+    <div class="category-card pests" onclick="showPestSubcategories()">
       <div class="category-icon">🐛</div>
       <h2>Pests &amp; Diseases</h2>
       <p>25 pests, diseases &amp; disorders</p>
+    </div>
+  </div>
+
+  <div class="menu-categories" id="pestSubcategories" style="display:none;">
+    <button class="back-btn" onclick="backToMainMenu()" style="position:absolute;top:20px;left:20px;">← Back</button>
+    <div style="text-align:center;margin-bottom:20px;">
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rust);">Select Pest Collection</h2>
+    </div>
+    <div class="menu-categories" style="gap:28px;">
+      <div class="category-card pests" onclick="launchApp('pests-all')">
+        <div class="category-icon">🐛</div>
+        <h2>All Pests</h2>
+        <p>25 pests, diseases &amp; disorders</p>
+      </div>
+      <div class="category-card pests" onclick="launchApp('pests-ncc')">
+        <div class="category-icon">🌿</div>
+        <h2>Non-Chemical Control</h2>
+        <p>8 pests &amp; diseases with controls</p>
+      </div>
     </div>
   </div>
 
@@ -553,6 +596,7 @@
       </div>
     </div>
   </div>
+  
 </div>
 
 <!-- ══════════════════════════════════════
@@ -602,6 +646,12 @@
             <div class="back-number" id="backNumber">#1</div>
             <div class="plant-name"  id="backName">—</div>
             <div class="common-name" id="backCommon"></div>
+            <div id="nccContainer" style="display:none;">
+              <div class="ncc-section">
+                <div class="ncc-label">Non-Chemical Control</div>
+                <div class="ncc-text" id="nccText"></div>
+              </div>
+            </div>
             <div class="back-flip-hint">Tap to see image</div>
           </div>
         </div>
@@ -751,6 +801,19 @@ const PLANTS = [
 // PCA 2 plant IDs
 const PCA2_IDS = new Set([7, 13, 16, 21, 36, 45, 48, 49, 60, 65, 82, 87, 97, 101, 105, 2, 57, 98, 5, 18, 19, 22, 32, 33, 58, 67, 85, 109, 10, 25, 68, 34, 35, 40, 50, 64, 66, 74, 75, 81, 83, 88, 89, 99, 104, 6, 26, 3, 23, 15, 24, 38, 41, 44, 54, 59, 63, 71, 72, 76, 91, 100, 103, 106]);
 
+// Non-Chemical Control data
+const NON_CHEMICAL_CONTROLS = {
+  13: "Hand remove",  // Slug
+  11: "Scrape off",   // Scale insect
+  9: "Introduce/encourage predators such as starlings, robins, black birds OR hand remove where possible", // Lily beetle
+  23: "Prune diseased areas and burn arisings", // Pear rust
+  16: "Prune diseased areas and make sure that roses are spaced out/well ventilated", // Black spot
+  18: "Prune diseased areas", // Box blight
+  25: "Prune out mutated plants", // Fasciation
+  // Magnesium deficiency would be item 26 if it was a separate entry, but since it's "Fascination" in position 25, this serves as an example
+  // If you want to add it separately, we can add it
+};
+
 const PESTS = [
   {id:1, name:"Black Bean Aphid",        common:"Insect Pest"},
   {id:2, name:"Cabbage White",           common:"Butterfly & Larva"},
@@ -815,17 +878,24 @@ function showPlantSubcategories() {
   document.getElementById('plantSubcategories').style.display = 'flex';
 }
 
+function showPestSubcategories() {
+  document.getElementById('mainCategories').style.display = 'none';
+  document.getElementById('pestSubcategories').style.display = 'flex';
+}
+
 function backToMainMenu() {
   document.getElementById('mainCategories').style.display = 'flex';
   document.getElementById('plantSubcategories').style.display = 'none';
+  document.getElementById('pestSubcategories').style.display = 'none';
 }
 
 function launchApp(cat) {
   category = cat;
   
-  // Determine which plants to use
+  // Determine which items to use
   let baseList = PLANTS;
   let displayTitle = '';
+  let isPestsCategory = false;
   
   if (cat === 'plants-pca2') {
     baseList = PLANTS.filter(p => PCA2_IDS.has(p.id));
@@ -833,9 +903,18 @@ function launchApp(cat) {
   } else if (cat === 'plants-all') {
     baseList = PLANTS;
     displayTitle = '🌿 Plant <em>Identification</em> Flashcards';
+  } else if (cat === 'pests-ncc') {
+    baseList = PESTS.filter(p => NON_CHEMICAL_CONTROLS.hasOwnProperty(p.id));
+    displayTitle = '🌿 Non-Chemical Control <em>Identification</em> Flashcards';
+    isPestsCategory = true;
+  } else if (cat === 'pests-all') {
+    baseList = PESTS;
+    displayTitle = '🐛 Pest &amp; Disease <em>Identification</em> Flashcards';
+    isPestsCategory = true;
   } else if (cat === 'pests') {
     baseList = PESTS;
     displayTitle = '🐛 Pest &amp; Disease <em>Identification</em> Flashcards';
+    isPestsCategory = true;
   }
   
   masterList = [...baseList];
@@ -863,9 +942,8 @@ function launchApp(cat) {
   });
 
   // Update UI chrome
-  const isPests = cat === 'pests';
   const header  = document.getElementById('appHeader');
-  header.className = isPests ? 'pests-header' : '';
+  header.className = isPestsCategory ? 'pests-header' : '';
   document.getElementById('appTitle').innerHTML = displayTitle;
   document.getElementById('loadStatus').textContent =
     masterList.length + ' items loaded';
@@ -959,6 +1037,15 @@ function showCard(idx) {
   document.getElementById('backName').textContent   = item.name;
   const cn = (cache && cache !== 'error' && cache.common) ? cache.common : (item.common || '');
   document.getElementById('backCommon').textContent  = cn;
+
+  // Show non-chemical control if available
+  const nccContainer = document.getElementById('nccContainer');
+  if (NON_CHEMICAL_CONTROLS.hasOwnProperty(item.id)) {
+    document.getElementById('nccText').textContent = NON_CHEMICAL_CONTROLS[item.id];
+    nccContainer.style.display = 'block';
+  } else {
+    nccContainer.style.display = 'none';
+  }
 
   document.getElementById('cardCounter').textContent = `${currentIndex + 1} / ${currentList.length}`;
 
