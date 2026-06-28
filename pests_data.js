@@ -98,5 +98,9 @@ window.PESTS_DATA = [
   {
     "id": 25,
     "name": "Fascination"
+  },
+  {
+    "id": 26,
+    "name": "Magnesium deficiency"
   }
 ];

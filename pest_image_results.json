@@ -148,5 +148,11 @@
     "url1": "pest_images/25a.png",
     "url2": null,
     "common": "Fascination"
+  },
+    "26": {
+    "url": "local_file",
+    "url1": "pest_images/26a.jpg",
+    "url2": "pest_images/26b.jpg",
+    "common": "Magnesium deficiency"
   }
 }

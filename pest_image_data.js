@@ -25,4 +25,5 @@ window.PEST_IMAGE_CACHE = {
   23: {"url": "pest_images/23a.png", "url1": "pest_images/23a.png", "common": "Pear rust"},
   24: {"url": "pest_images/24a.png", "url1": "pest_images/24a.png", "common": "Powdery mildew"},
   25: {"url": "pest_images/25a.png", "url1": "pest_images/25a.png", "common": "Fascination"},
+  26: {"url": "pest_images/26a.jpg", "url1": "pest_images/26a.jpg", "url2": "pest_images/26b.jpg", "common": "Magnesium deficiency"}
 };
