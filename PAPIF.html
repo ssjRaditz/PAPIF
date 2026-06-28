@@ -42,13 +42,12 @@
     gap: 48px;
   }
 
-  #plantSubcategories {
+  #menuSubcategories {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
     gap: 36px;
     position: relative;
   }
@@ -559,9 +558,9 @@
     </div>
   </div>
 
-<div class="menu-categories" id="pestSubcategories" style="display:none; justify-content:start;">    
-    <div style="text-align:center;">
-        <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rust);">Select Pest Collection</h2>
+<div class="menuSubcategories" id="pestSubcategories" style="display:none; flex-direction:column; align-items:center;">    
+    <div style="text-align:center; width:100%; margin-bottom:20px;">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rust); margin:0;">Select Pest Collection</h2>
     </div>
     <div class="menu-categories" style="gap:28px;">
         <div class="category-card pests" onclick="launchApp('pests-all')">
@@ -581,9 +580,9 @@
     </div> 
 </div>
 
-  <div class="menu-categories" id="plantSubcategories" style="display:none; justify-content:start;">
-    <div style="text-align:center;">
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--moss);">Select Plant Collection</h2>
+  <div class="menuSubcategories" id="plantSubcategories" style="display:none; flex-direction:column; align-items:center;">
+    <div style="text-align:center; width:100%; margin-bottom:20px;">
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--moss); margin:0;">Select Plant Collection</h2>
     </div>
     <div class="menu-categories" style="gap:28px;">
       <div class="category-card plants" onclick="launchApp('plants-all')">
