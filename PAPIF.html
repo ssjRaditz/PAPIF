@@ -643,7 +643,6 @@
         <div class="flashcard" id="flashcard">
           <div class="face face-front">
             <div class="card-images-row" id="cardImagesRow">
-              <!-- slots injected by JS -->
             </div>
             <div class="flip-hint" id="flipHint">Tap to reveal name</div>
           </div>
@@ -1050,7 +1049,7 @@ function showCard(idx) {
 
   // Show non-chemical control if available
   const nccContainer = document.getElementById('nccContainer');
-  if (NON_CHEMICAL_CONTROLS.hasOwnProperty(item.id)) {
+  if (NON_CHEMICAL_CONTROLS.hasOwnProperty(item.id) && category.startsWith('pests')) {
     document.getElementById('nccText').textContent = NON_CHEMICAL_CONTROLS[item.id];
     nccContainer.style.display = 'block';
   } else {
